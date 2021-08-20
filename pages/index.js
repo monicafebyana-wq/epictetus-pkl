@@ -1,28 +1,38 @@
-import { useState } from 'react'
-import Head from 'next/head'
+ import Head from 'next/head'
 import FeaturedPost from '@/components/FeaturedPost'
-import CardPost from '@/components/CardPost'
 import Container from '@/components/Container'
-import Layout from '@/components/Layout'
-import mockPosts from '../utils/posts.json'
+import PostList from '@/components/PostList'
 
-export default function Home() {
-  const [posts, setPosts] = useState(mockPosts)
+export async function getServerSideProps(){
+  //fetching API featured post
+  const reqFeatured = await fetch(process.env.NEXT_PUBLIC_APIURL + '/posts?featured=true&&_sort=id:DESC&&_limit=1 ');
+  const featured = await reqFeatured.json();
+
+  //fetching API post biasa
+  const reqPosts = await fetch(process.env.NEXT_PUBLIC_APIURL + '/posts?featured=false&&_sort=id:DESC');
+  const posts =  await reqPosts.json();
+
+  return {
+    props: {
+      featured : featured.length > 0 ? featured[0] : false,
+      posts
+    }
+  }
+}
+
+export default function Home({ featured, posts }) {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Home &ndash; Epictetus</title>
       </Head>
       <Container>
-        <FeaturedPost />
-        <div className="flex -mx-4 flex-wrap mt-6">
-          {posts.map(post=>(
-            <div key={post.id} className="md:w-4/12 px-4 py-6">
-              <CardPost {...post}/>
-            </div>
-          ))}
-        </div>
+        {featured &&
+          <FeaturedPost 
+          {...featured}/>
+        }
+        <PostList posts={posts}/>
       </Container>
-    </Layout>
+    </>
   )
 }
