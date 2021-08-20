@@ -39,11 +39,11 @@ export default function Detail({ detail }){
           <PostsAuthor
             authorName={detail.author.name}
             authorJob={detail.author.job}
-            authorAvatar={process.env.NEXT_PUBLIC_APIURL + detail.author.avatar[0].url}
+            authorAvatar={detail.author.avatar[0].url}
           />
         </div>
         <div className="md:w-10/12 w-full mx-auto my-10">
-          <img src={process.env.NEXT_PUBLIC_APIURL + detail.thumbnail.url} className="w-full rounded-lg" />
+          <img src={detail.thumbnail.url} className="w-full rounded-lg" />
         </div>
         <div className="md:w-8/12 w-full mx-auto leading-relaxed">
           <div className="text-xl mb-4">
