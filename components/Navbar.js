@@ -76,7 +76,7 @@ export default function Navbar({ categories }){
                         <svg className="ml-2 mt-1 " width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M4 6L8 10L12 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
-                        </a>
+                      </a>
                         {dropdown &&(
                       <ul className="absolute w-[200px] bg-gray-800 rounded shadow-2xl mt-4">
                         {items.slice(3).map(item => (
